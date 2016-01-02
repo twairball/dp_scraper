@@ -1,4 +1,4 @@
-class Vendor
+class DpScraper::Vendor
 
 	attr_reader :name, :image_url, :street, :district, :city, :province, :coupons
 

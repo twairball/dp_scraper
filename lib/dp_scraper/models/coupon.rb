@@ -1,4 +1,4 @@
-class Coupon
+class DpScraper::Coupon
 
 	attr_reader :title, :description
 

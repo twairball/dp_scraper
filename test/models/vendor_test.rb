@@ -11,7 +11,7 @@ class VendorTest < Minitest::Test
   	@province = "上海"
   	@image_url = "http://hello.com/img123123.png"
 
-  	@vendor = Vendor.new(name: @name, street: @street, district: @district, city: @city, province: @province, image_url: @image_url)
+  	@vendor = DpScraper::Vendor.new(name: @name, street: @street, district: @district, city: @city, province: @province, image_url: @image_url)
 
   end
 
@@ -25,8 +25,8 @@ class VendorTest < Minitest::Test
   end
 
   def test_has_coupons
-  	coupon1 = Coupon.new(title: 'coupon1')
-  	coupon2 = Coupon.new(title: 'coupon2')
+  	coupon1 = DpScraper::Coupon.new(title: 'coupon1')
+  	coupon2 = DpScraper::Coupon.new(title: 'coupon2')
 
   	# assign
   	@vendor.coupons << coupon1

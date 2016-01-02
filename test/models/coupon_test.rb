@@ -6,7 +6,7 @@ class CouponTest < Minitest::Test
   def setup
     @title = "hello coupon"
     @desc = "awesome coupon!!"
-    @coupon = Coupon.new(title: @title, description: @desc)
+    @coupon = DpScraper::Coupon.new(title: @title, description: @desc)
   end
 
   def test_initializer
