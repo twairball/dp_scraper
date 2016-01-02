@@ -1,0 +1,1 @@
+require 'dp_scraper/pages/huoguo_index'
