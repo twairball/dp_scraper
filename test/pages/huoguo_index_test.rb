@@ -8,11 +8,11 @@ class HuoguoIndexTest < Minitest::Test
   end
 
   def test_initializer
-
+  	assert_equal [], @huoguo.vendors
   end
 
   def test_scrape_page
-
+  	
   end
 
 

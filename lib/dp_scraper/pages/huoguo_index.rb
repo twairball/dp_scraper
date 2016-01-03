@@ -32,6 +32,10 @@ class DpScraper::HuoguoIndex
 
 	end
 
+	def scrape_content(content:)
+		
+	end
+
 	def scrape_vendor(li: )
 
 		# check if have 优惠

@@ -25,5 +25,10 @@ module DpScraper
 	end
 end
 
+
+# watir extensions
+require 'watir/element_locator'
+
+# lib
 require 'dp_scraper/models'
 require 'dp_scraper/pages'
