@@ -7,6 +7,7 @@ class DpScraper::HuoguoIndex
 		@vendors = []
 	end
 
+
 	def scrape_page
 		content = browser.div(class_name: 'content')
 
@@ -22,18 +23,14 @@ class DpScraper::HuoguoIndex
 			##  print results
 			##
 			puts("===========================================================")
-			puts("#{vendor.name}   [#{shop_type}] [#{shop_area}]\n
-					address:  #{address}\n
-					image_url:   #{image_url}\n
-					promotion:   #{promotion}\n\n")
+			puts("#{vendor.name}   [#{vendor.district}]\n
+					address:  #{vendor.street}\n
+					image_url:   #{vendor.image_url}\n
+					coupons:   #{vendor.coupons.count}\n\n")
 		end
 
 		return self.vendors
 
-	end
-
-	def scrape_content(content:)
-		
 	end
 
 	def scrape_vendor(li: )
@@ -41,40 +38,24 @@ class DpScraper::HuoguoIndex
 		# check if have 优惠
 		return false unless li.link(class_name: 'tuan').exists?
 		#非团购优惠
-		#return false unless li.span(class_name: 'tit').exists?
+		#return false unless li.link(class_name: 'tit').exists?
 
-		# shop pic thumbnail
-		image_url = vendor_li.img.src
+		# get url for detail page
+		detail_link = li.link(data_hippo_type: 'shop')
 
-		# title in <h4>
-		name = vendor_li.h4.text 
+		return false unless detail_link.exists?
+		detail_url = detail_link.href
 
-		# address
-		address = vendor_li.span(class_name: 'addr').text
 
-		# tags -- there will be 2, "火锅" and "八佰伴"
-		tags = vendor_li.spans(class_name: 'tag')
-			# type 
-			shop_type = tags[0].text
+		# make new browser
+		new_browser = Watir::Browser.new :firefox
+		new_browser.goto detail_url
+		detail_page = DpScraper::HuoguoDetail.new(browser: new_browser)
 
-			# area e.g. 八佰伴, 五角场
-			shop_area = tags[1].text
+		vendor = detail_page.scrape_page
 
-		# promotions, 团购 mixed in with 优惠
-		# 优惠 seems to be in .tuan.priviledge
-		promotion = vendor_li.link(class_name: 'tuan').title
-
-		## coupon
-		coupon = DpScraper::Coupon.new(title: promotion)
-
-		## vendor
-		##
-		## TODO: get city/district/province
-		vendor = DpScraper::Vendor.new(name: name, image_url: image_url, street: address)
-		vendor.shop_type = shop_type
-		vendor.shop_area = shop_area
-		vendor.coupons << coupon
-
-		return vendor
+		new_browser.close
+		
+		return vendor 
 	end
 end
