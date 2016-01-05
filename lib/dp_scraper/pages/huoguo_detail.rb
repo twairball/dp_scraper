@@ -36,7 +36,25 @@ class DpScraper::HuoguoDetail
 		## instantiate vendor
 		self.vendor = DpScraper::Vendor.new(name: shop_name, district: district, street: street, tel: tel, image_url: image_url)
 
+		## get coupons
+		coupon_as = browser.links(class_name: /J_short-promo/)
+		coupon_as.each do |coupon_a|
+		
+			coupon = self.scrape_coupon(coupon_a)
+			self.vendor.coupons << coupon
+		end
+		
 		return self.vendor
+	end
+
+	def scrape_coupon(coupon_a)
+
+		title = "促销"
+		description = coupon_a.text.split("\n").last
+
+		## instantiate coupon
+		coupon = DpScraper::Coupon.new(title: title,description: description)
+		return coupon
 	end
 
 end

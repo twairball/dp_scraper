@@ -40,6 +40,8 @@ class DpScraper::HuoguoIndex
 
 		# check if have 优惠
 		return false unless li.link(class_name: 'tuan').exists?
+		#非团购优惠
+		#return false unless li.span(class_name: 'tit').exists?
 
 		# shop pic thumbnail
 		image_url = vendor_li.img.src
