@@ -22,11 +22,13 @@ class DpScraper::HuoguoIndex
 			##
 			##  print results
 			##
-			puts("===========================================================")
-			puts("#{vendor.name}   [#{vendor.district}]\n
-					address:  #{vendor.street}\n
-					image_url:   #{vendor.image_url}\n
-					coupons:   #{vendor.coupons.count}\n\n")
+
+			puts("===========================================================================================")
+			puts("#{vendor.name} [#{vendor.district}]\naddress: #{vendor.street}\nimage_url: #{vendor.image_url}\ncoupons: #{vendor.coupons.count}\n\n")
+			for coupon in vendor.coupons
+				puts("title: #{coupon.title} desc: #{coupon.description}")
+			end
+
 		end
 
 		return self.vendors

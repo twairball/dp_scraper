@@ -18,10 +18,20 @@ module DpScraper
 		def initialize(url: nil)
 			@vendors = []
 
-			@url = url || "http://www.dianping.com/search/category/1/10/g110"
-			@browser = Watir::Browser.new :firefox
+			page = 1
 
-			@browser.goto @url
+			for page in 1..50
+
+				@url = url || "http://www.dianping.com/search/category/1/10/g110p" + page.to_s			
+				@browser = Watir::Browser.new :firefox
+				@browser.goto @url
+				puts("page: #{page}")
+
+				self.crawl
+				page = page + 1
+
+		    end
+
 		end
 
 		def crawl
@@ -29,14 +39,13 @@ module DpScraper
 			index_scraper.scrape_page
 			self.vendors += index_scraper.vendors
 
-			puts "********************"
+			puts "******************************************"
 			puts "total vendors: #{self.vendors.count} found"
 		end
 
 		def next_page
 
 		end
-
 
 	end
 end

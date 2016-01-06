@@ -26,7 +26,12 @@ class DpScraper::HuoguoDetail
 
 		## image url, get from .photo-header first img
 		#火锅图片
-		photo_div = browser.div(class_name: 'photo-header')
+		if browser.div(class_name: 'photo-header').exists?
+			photo_div = browser.div(class_name: 'photo-header')
+		else
+			photo_div = browser.div(class_name: 'photos')
+		end
+		   
 
 		##足疗按摩图片
 		#photo_div = browser.div(class_name: 'photos')
