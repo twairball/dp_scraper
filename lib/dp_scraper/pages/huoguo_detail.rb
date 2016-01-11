@@ -25,13 +25,24 @@ class DpScraper::HuoguoDetail
 		tel = content.span(itemprop: 'tel').text
 
 		## image url, get from .photo-header first img
-		photo_div = browser.div(class_name: 'photo-header')
+		#火锅图片
+		if browser.div(class_name: 'photo-header').exists?
+			photo_div = browser.div(class_name: 'photo-header')
+		else
+			photo_div = browser.div(class_name: 'photos')
+		end
+		   
+
+		##足疗按摩图片
+		#photo_div = browser.div(class_name: 'photos')
 
 		if photo_div.imgs.count > 0 
 			image_url = photo_div.img.src
 		else
 			image_url = nil
 		end
+
+
 
 		## instantiate vendor
 		self.vendor = DpScraper::Vendor.new(name: shop_name, district: district, street: street, tel: tel, image_url: image_url)
